@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { budgetCategory } from "../shared/interfaces";
 
+const dummyData: budgetCategory[] = [
+  { Rent: 1000 },
+  { Groceries: 200 },
+  { Utilities: 100 },
+  { Entertainment: 50 },
+];
+
 function Budget() {
-  const [budget, setBudget] = useState<budgetCategory[]>([]);
+  const [budget, setBudget] = useState<budgetCategory[]>(dummyData);
 
   const [isAddingCategory, setIsAddingCategory] = useState<boolean>(false);
 
@@ -22,6 +29,12 @@ function Budget() {
 
     setIsAddingCategory(false);
   };
+
+  const removeItem = (key: string) => {
+    const updatedBudget = budget.filter((item) => !item[key]);
+    setBudget(updatedBudget);
+  };
+
   return (
     <div>
       <h1 className="mb-5">My Budget</h1>
@@ -31,6 +44,7 @@ function Budget() {
             <tr>
               <th scope="col">Item</th>
               <th scope="col">Amount</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -39,6 +53,15 @@ function Budget() {
                 <tr key={key + index}>
                   <th scope="row">{key}</th>
                   <td>${value}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      onClick={() => removeItem(key)}
+                    >
+                      Remove
+                    </button>
+                  </td>
                 </tr>
               ))
             )}
