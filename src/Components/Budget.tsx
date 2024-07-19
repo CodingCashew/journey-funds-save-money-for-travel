@@ -17,8 +17,9 @@ function Budget() {
           Produce: ${item.produce}
         </div>
       ))} */}
-      <table className="table">
-        <thead>
+      <div className="d-flex mw-xs-85 p-4">
+      <table className="table responsive">
+        <thead >
           <tr>
             <th scope="col">#</th>
             <th scope="col">Item</th>
@@ -35,18 +36,29 @@ function Budget() {
           ))}
         </tbody>
       </table>
-      <input
-        className="form-control"
-        type="text"
-        placeholder="Default input"
-        aria-label="default input example"
-      ></input>
-      <input
-        className="form-control"
-        type="text"
-        placeholder="Default input"
-        aria-label="default input example"
-      ></input>
+      </div>
+      <div className="d-flex flex-wrap justify-content-center">
+        <div className="d-flex-column flex-fill m-2">
+          <label className="form-label">Category Name</label>
+          <input
+            className="form-control "
+            type="text"
+            placeholder="Category Name"
+            id="category"
+            aria-label="budget category"
+          ></input>
+        </div>
+        <div className="d-flex-column flex-fill m-2">
+          <label className="form-label">Budget Amount</label>
+          <input
+            className="form-control "
+            type="text"
+            placeholder="Budget Amount"
+            id="budget-amount"
+            aria-label="budget amount"
+          ></input>
+        </div>
+      </div>
     </div>
   );
 }
