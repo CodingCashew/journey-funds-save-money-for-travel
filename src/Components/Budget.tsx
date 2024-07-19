@@ -1,64 +1,96 @@
-import React from "react";
+import { useState } from "react";
 import { budgetCategory } from "../shared/interfaces";
 
-const budget: budgetCategory[] = [{ produce: 300 }];
-
 function Budget() {
+  const [budget, setBudget] = useState<budgetCategory[]>([]);
+
+  const [isAddingCategory, setIsAddingCategory] = useState<boolean>(false);
+
+  const [newCategory, setCategory] = useState<string>("");
+  const [newAmount, setAmount] = useState<number>(0);
+
+  const handleNewCategory = (e: any) => {
+    setCategory(e.target.value);
+  };
+
+  const handleNewAmount = (e: any) => {
+    setAmount(e.target.value);
+  };
+
+  const handleSubmitNewBudgetItem = () => {
+    setBudget((prevState) => [...prevState, { [newCategory]: newAmount }]);
+
+    setIsAddingCategory(false);
+  };
   return (
     <div>
       <h1 className="mb-5">My Budget</h1>
-      {/* Add Budget button shows if budget object doesn't have any length */}
-
-      {/* if adding budget, show the input fields with button at bottom to show more rows */}
-
-      {/* map budget rows */}
-      {/* {budget.map((item, index) => (
-        <div key={index}>
-          Produce: ${item.produce}
-        </div>
-      ))} */}
       <div className="d-flex mw-xs-85 p-4">
-      <table className="table responsive">
-        <thead >
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Item</th>
-            <th scope="col">Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          {budget.map((item, index) => (
-            <tr key={index}>
-              <th scope="row">{index + 1}</th>
-              <td>Produce</td>
-              <td>${item.produce}</td>
+        <table className="table responsive">
+          <thead>
+            <tr>
+              <th scope="col">Item</th>
+              <th scope="col">Amount</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {budget.map((item, index) =>
+              Object.entries(item).map(([key, value]) => (
+                <tr key={key + index}>
+                  <th scope="row">{key}</th>
+                  <td>${value}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
-      <div className="d-flex flex-wrap justify-content-center">
-        <div className="d-flex-column flex-fill m-2">
-          <label className="form-label">Category Name</label>
-          <input
-            className="form-control "
-            type="text"
-            placeholder="Category Name"
-            id="category"
-            aria-label="budget category"
-          ></input>
+      {!isAddingCategory && (
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => setIsAddingCategory(true)}
+        >
+          Add Budget Category
+        </button>
+      )}
+      {isAddingCategory === true && (
+        <div className="d-flex-column">
+          <div className="d-flex flex-wrap justify-content-center">
+            <div className="d-flex-column flex-fill m-2">
+              <label className="form-label">Category Name</label>
+              <input
+                className="form-control "
+                type="text"
+                placeholder="Category Name"
+                id="category"
+                aria-label="budget category"
+                onChange={handleNewCategory}
+              ></input>
+            </div>
+            <div className="d-flex-column flex-fill m-2">
+              <label className="form-label">Budget Amount</label>
+              <input
+                className="form-control "
+                type="text"
+                placeholder="Budget Amount"
+                id="budget-amount"
+                aria-label="budget amount"
+                onChange={handleNewAmount}
+              ></input>
+            </div>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={handleSubmitNewBudgetItem}
+            >
+              Submit Category
+            </button>
+          </div>
         </div>
-        <div className="d-flex-column flex-fill m-2">
-          <label className="form-label">Budget Amount</label>
-          <input
-            className="form-control "
-            type="text"
-            placeholder="Budget Amount"
-            id="budget-amount"
-            aria-label="budget amount"
-          ></input>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
