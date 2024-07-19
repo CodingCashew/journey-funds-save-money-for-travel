@@ -8,8 +8,8 @@ require("dotenv").config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.resolve(__dirname, "../src/styles.css")));
-app.use(express.static(path.resolve(__dirname, "../src/assets/")));
+app.use(express.static(path.resolve(__dirname, "../src/index.css")));
+app.use(express.static(path.resolve(__dirname, "../src/public/assets/")));
 app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../public/index.html"));
 });
@@ -30,6 +30,8 @@ app.use((err, req, res, next) => {
   res.status(errObj.status).json(errObj.message);
 });
 
-app.listen(PORT, () => {});
+app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}`);
+});
 
 module.exports = app;
