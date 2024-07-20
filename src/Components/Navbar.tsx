@@ -1,11 +1,22 @@
 import React from "react";
 
+import { useAccountContext } from "../context/AccountContext";
+
 function Navbar() {
+  const {
+    isLoggedIn,
+    updateIsLoggedIn,
+    // user,
+    // updateUser,
+  } = useAccountContext();
+
   return (
     <div>
       <nav className="navbar navbar-expand-sm bg-light">
         <div className="container-fluid">
-          <a href="/"><h2 className="navbar-brand">Save Money for Travel!</h2></a>
+          <a href="/">
+            <h2 className="navbar-brand">Save Money for Travel!</h2>
+          </a>
           <button
             className="navbar-toggler"
             type="button"
@@ -20,23 +31,39 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mw-30">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/expenses">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="/expenses"
+                >
                   Expenses and Income
                 </a>
               </li>
             </ul>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mw-30">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/budget">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="/budget"
+                >
                   My Budget
                 </a>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <button className="btn btn-primary" type="submit">
-                Log in
+            {!isLoggedIn && (
+              <a className="nav-link active" aria-current="page" href="/login">
+                <button className="btn btn-primary mx-2">Log in</button>
+              </a>
+            )}
+            {isLoggedIn && (
+              <button
+                className="btn btn-primary mx-2"
+                onClick={() => updateIsLoggedIn(false)}
+              >
+                Log out
               </button>
-            </form>
+            )}
           </div>
         </div>
       </nav>

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const PORT = 8080;
+const loginController = require("./loginController");
 
 require("dotenv").config();
 
@@ -13,7 +14,13 @@ app.use(express.static(path.resolve(__dirname, "../src/public/assets/")));
 app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../public/index.html"));
 });
+app.post("/signup", loginController.signup, (req, res) => {
+  return res.status(200).json(res.locals.message);
+});
 
+app.post("/login", loginController.login, (req, res) => {
+  return res.status(200).json(res.locals.message);
+});
 
 app.use("*", (req, res) =>
   res.status(404).send("The page you are looking for does not exist.")

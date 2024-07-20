@@ -78,7 +78,7 @@ function Expenses() {
       id: newId,
       date: new Date(newExpenseOrIncome.date),
     }));
-    console.log("newExpenseOrIncome", newExpenseOrIncome);
+
     setExpenses((prevState) => [...prevState, newExpenseOrIncome]);
 
     setIsAddingExpenseOrIncome(false);

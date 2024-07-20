@@ -12,3 +12,9 @@ export interface IncomeOrExpense {
   notes?: string;
   incomeOrExpense: "income" | "expense";
 }
+
+
+export interface User {
+  email: string;
+  password: string;
+}
