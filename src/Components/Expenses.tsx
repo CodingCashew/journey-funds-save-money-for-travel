@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+import { useAccountContext } from "../context/AccountContext";
 import { IncomeOrExpense } from "../shared/interfaces";
 
 const dummyData: IncomeOrExpense[] = [
@@ -45,6 +47,7 @@ const dummyData: IncomeOrExpense[] = [
 ];
 
 function Expenses() {
+  const { user } = useAccountContext();
   const [expenses, setExpenses] = useState<IncomeOrExpense[]>(dummyData);
 
   const [isAddingExpenseOrIncome, setIsAddingExpenseOrIncome] =

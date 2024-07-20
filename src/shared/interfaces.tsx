@@ -13,8 +13,9 @@ export interface IncomeOrExpense {
   incomeOrExpense: "income" | "expense";
 }
 
-
 export interface User {
   email: string;
   password: string;
+  budget?: BudgetCategory[];
+  expenses?: IncomeOrExpense[];
 }

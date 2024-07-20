@@ -32,17 +32,10 @@ loginController.login = async (req, res, next) => {
 
   db.query(queryString)
     .then((data) => {
-      const user = data.rows[0];
-
-      if (!user) {
-        return next({ message: { err: "User not found." } });
-      }
-      if (hash === user.password) {
-        res.locals.message = `You have successfully logged in.`;
-        return next();
-      } else {
-        throw new Error("Password does not match.");
-      }
+      if (!bcrypt.compare(data.rows[0].password, hash))
+        throw new Error("Invalid password");
+      res.locals.user = data.rows;
+      return next();
     })
     .catch((err) =>
       next({

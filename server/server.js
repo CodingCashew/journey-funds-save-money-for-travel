@@ -19,7 +19,7 @@ app.post("/signup", loginController.signup, (req, res) => {
 });
 
 app.post("/login", loginController.login, (req, res) => {
-  return res.status(200).json(res.locals.message);
+  return res.status(200).json(res.locals.user);
 });
 
 app.use("*", (req, res) =>

@@ -7,6 +7,7 @@ import { User } from "../shared/interfaces";
 const initialValues = {
   email: "",
   password: "",
+  expenses: [],
 };
 
 function Login() {
@@ -21,9 +22,10 @@ function Login() {
     });
   };
 
-  const { updateIsLoggedIn, updateUser } = useAccountContext();
+  const { updateIsLoggedIn, updateUser, user } = useAccountContext();
 
   const submitCredentials = async () => {
+    if (!credentials.email || !credentials.password) return;
     fetch("/login", {
       method: "POST",
       body: JSON.stringify({
@@ -34,14 +36,14 @@ function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message === "Cannot find user") {
-          throw new Error();
-        }
+        const userData = data[0];
 
         updateUser({
-          email: data.email,
+          email: userData.email,
           password: "xxxxxxx",
+          expenses: userData.expenses,
         });
+
         setCredentials(initialValues);
         updateIsLoggedIn(true);
 
@@ -57,6 +59,7 @@ function Login() {
     <div>
       <h1 className="my-4">Log In</h1>
       <div className="d-flex-column">
+        <p>{user.expenses ? user.expenses[0].description : "bananas"}</p>
         <div className="d-flex-column flex-wrap">
           <div className="d-flex flex-fill  my-3 col-md-6 mx-auto align-items-center">
             <label className="form-label col-3">Email</label>

@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import {User} from "../shared/interfaces";
+import { User } from "../shared/interfaces";
 
 type AccountProviderProps = {
   children: ReactNode;
@@ -19,7 +19,6 @@ type AccountContextType = {
   updateUser: (newUser: User) => void;
 };
 
-
 const AccountContext = createContext({} as AccountContextType);
 
 export function useAccountContext() {
@@ -29,6 +28,7 @@ export function useAccountContext() {
 const initialValues: User = {
   email: "",
   password: "",
+  expenses: [],
 };
 
 export function AccountProvider({ children }: AccountProviderProps) {
