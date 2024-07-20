@@ -5,7 +5,7 @@ function Navbar() {
     <div>
       <nav className="navbar navbar-expand-sm bg-light">
         <div className="container-fluid">
-          <h2 className="navbar-brand">Save Money for Travel!</h2>
+          <a href="/"><h2 className="navbar-brand">Save Money for Travel!</h2></a>
           <button
             className="navbar-toggler"
             type="button"
@@ -20,14 +20,14 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mw-30">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">
+                <a className="nav-link active" aria-current="page" href="/expenses">
                   Expenses and Income
                 </a>
               </li>
             </ul>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mw-30">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">
+                <a className="nav-link active" aria-current="page" href="/budget">
                   My Budget
                 </a>
               </li>

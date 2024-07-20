@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { budgetCategory } from "../shared/interfaces";
+import { BudgetCategory } from "../shared/interfaces";
 
-const dummyData: budgetCategory[] = [
+const dummyData: BudgetCategory[] = [
   { Rent: 1000 },
   { Groceries: 200 },
   { Utilities: 100 },
@@ -9,7 +9,7 @@ const dummyData: budgetCategory[] = [
 ];
 
 function Budget() {
-  const [budget, setBudget] = useState<budgetCategory[]>(dummyData);
+  const [budget, setBudget] = useState<BudgetCategory[]>(dummyData);
 
   const [isAddingCategory, setIsAddingCategory] = useState<boolean>(false);
 
@@ -37,12 +37,12 @@ function Budget() {
 
   return (
     <div>
-      <h1 className="mb-5">My Budget</h1>
+      <h1 className="my-4">My Budget</h1>
       <div className="d-flex mw-xs-85 p-4">
         <table className="table responsive">
           <thead>
             <tr>
-              <th scope="col">Item</th>
+              <th scope="col">Category</th>
               <th scope="col">Amount</th>
               <th scope="col"></th>
             </tr>
@@ -110,6 +110,13 @@ function Budget() {
               onClick={handleSubmitNewBudgetItem}
             >
               Submit Category
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-secondary mx-2"
+              onClick={() => setIsAddingCategory(false)}
+            >
+              Cancel
             </button>
           </div>
         </div>
