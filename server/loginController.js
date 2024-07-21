@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 
-const db = require("./LoginModel.js");
+const db = require("./DatabaseModel.js");
 
 const loginController = {};
 
@@ -39,12 +39,9 @@ loginController.login = async (req, res, next) => {
       res.locals.user = data.rows;
       return next();
     })
-    .catch((err) =>
-      next({
-        log: `Error in loginController.login: ${err}`,
-        message: { err: "Error logging in." },
-      })
-    );
+    .catch((err) => {
+      throw new Error(err);
+    });
 };
 
 module.exports = loginController;

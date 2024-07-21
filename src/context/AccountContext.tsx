@@ -30,6 +30,7 @@ export const initialValues: User = {
   email: "",
   password: "",
   expenses: [],
+  budget: [],
 };
 
 export function AccountProvider({ children }: AccountProviderProps) {
