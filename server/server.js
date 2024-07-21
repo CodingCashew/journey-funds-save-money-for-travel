@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const PORT = 8080;
 const loginController = require("./loginController");
+const expenseController = require("./expenseController");
 
 require("dotenv").config();
 
@@ -20,6 +21,14 @@ app.post("/signup", loginController.signup, (req, res) => {
 
 app.post("/login", loginController.login, (req, res) => {
   return res.status(200).json(res.locals.user);
+});
+
+app.post("/expense", expenseController.addExpense, (req, res) => {
+  return res.status(200).json(res.locals.user);
+});
+
+app.delete("/expense/:id", expenseController.removeExpense, (req, res) => {
+  return res.status(200).json(res.locals.message);
 });
 
 app.use("*", (req, res) =>

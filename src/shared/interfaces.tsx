@@ -3,7 +3,7 @@ export interface BudgetCategory {
 }
 
 export interface IncomeOrExpense {
-  id: number;
+  expenseId: string;
   date: Date;
   description: string;
   category: string;

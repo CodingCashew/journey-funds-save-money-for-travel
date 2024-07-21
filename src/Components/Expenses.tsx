@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { v4 as uuidv4 } from "uuid";
+
 import { useAccountContext } from "../context/AccountContext";
 import { IncomeOrExpense } from "../shared/interfaces";
 
@@ -17,43 +19,80 @@ function Expenses() {
   const [isAddingExpenseOrIncome, setIsAddingExpenseOrIncome] =
     useState<boolean>(false);
 
-  const [newExpenseOrIncome, setNewExpenseOrIncome] = useState<IncomeOrExpense>(
-    {
-      id: 0,
-      category: "",
-      amount: 0,
-      notes: "",
-      satisfaction: 0,
-      description: "",
-      date: new Date(),
-      incomeOrExpense: "expense",
-    }
-  );
+  const initialExpenseValues: IncomeOrExpense = {
+    expenseId: "",
+    category: "",
+    amount: 0,
+    notes: "",
+    satisfaction: 0,
+    description: "",
+    date: new Date(),
+    incomeOrExpense: "expense",
+  };
+
+  const [newExpenseOrIncome, setNewExpenseOrIncome] =
+    useState<IncomeOrExpense>(initialExpenseValues);
 
   const handleNewExpense = (e: any) => {
     const { id, value } = e.target;
-    setNewExpenseOrIncome((prevState) => ({
-      ...prevState,
+    setNewExpenseOrIncome({
+      ...newExpenseOrIncome,
       [id]: value,
-    }));
+    });
   };
 
   const handleSubmitNewExpenseOrIncome = () => {
-    const newId = expenses.length + 1;
-    setNewExpenseOrIncome((prevState) => ({
-      ...prevState,
-      id: newId,
+    const formattedNewExpense = {
+      ...newExpenseOrIncome,
+      expenseId: uuidv4().slice(0, 8),
       date: new Date(newExpenseOrIncome.date),
-    }));
+    };
 
-    setExpenses((prevState) => [...prevState, newExpenseOrIncome]);
+    setNewExpenseOrIncome(formattedNewExpense);
 
+    fetch("/expense", {
+      method: "POST",
+      body: JSON.stringify({ expense: formattedNewExpense, email: user.email }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setExpenses(JSON.parse(data.expenses));
+      })
+      .catch((err: any) => {
+        console.error("error: ", err);
+      });
+    setNewExpenseOrIncome(initialExpenseValues);
     setIsAddingExpenseOrIncome(false);
   };
 
-  const removeItem = (id: number) => {
-    const updatedBudget = expenses.filter((item) => item.id !== id);
-    setExpenses(updatedBudget);
+  const removeItem = (id: string) => {
+    // const updatedBudget = expenses.filter((item) => item.id !== id);
+    // setExpenses(updatedBudget);
+    // fetch(`/expense/${newExpenseOrIncome.id}`, {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     email: credentials.email.toLowerCase(),
+    //     password: credentials.password,
+    //   }),
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     const userData = data[0];
+    //     updateUser({
+    //       email: userData.email,
+    //       password: "xxxxxxx",
+    //       expenses: userData.expenses,
+    //     });
+    //     setCredentials(initialValues);
+    //     updateIsLoggedIn(true);
+    //     navigate("/");
+    //   })
+    //   .catch((err: any) => {
+    //     alert("Incorrect username or password.");
+    //     console.error("error: ", err);
+    //   });
   };
 
   return (
@@ -64,7 +103,8 @@ function Expenses() {
         <table className="table responsive">
           <thead>
             <tr>
-              <th scope="col">#</th>
+              {/* <th scope="col">#</th> */}
+              <th scope="col">Id</th>
               <th scope="col">Date</th>
               <th scope="col">Description</th>
               <th scope="col">Category</th>
@@ -76,8 +116,9 @@ function Expenses() {
           <tbody>
             {expenses.map((item, index) => {
               return (
-                <tr key={item.id}>
-                  <td>{index + 1}</td>
+                <tr key={index}>
+                  {/* <td>{index + 1}</td> */}
+                  <td>{item.expenseId}</td>
                   <td>{new Date(item.date).toLocaleDateString()}</td>
                   <td>{item.description}</td>
                   <td>{item.category}</td>
@@ -90,7 +131,7 @@ function Expenses() {
                     <button
                       type="button"
                       className="btn btn-outline-danger"
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeItem(item.expenseId)}
                     >
                       Remove
                     </button>

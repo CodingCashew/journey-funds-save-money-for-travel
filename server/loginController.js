@@ -7,6 +7,8 @@ const loginController = {};
 loginController.signup = async (req, res, next) => {
   const { email, password } = req.body;
 
+  // TODO: Check if email already exists in database
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const queryString = `INSERT INTO users(email, password) values ('${email}', '${hashedPassword}');`;
