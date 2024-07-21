@@ -27,7 +27,7 @@ app.post("/expense", expenseController.addExpense, (req, res) => {
   return res.status(200).json(res.locals.user);
 });
 
-app.delete("/expense/:id", expenseController.removeExpense, (req, res) => {
+app.delete("/expense", expenseController.removeExpense, (req, res) => {
   return res.status(200).json(res.locals.message);
 });
 

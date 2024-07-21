@@ -3,30 +3,20 @@ const db = require("./ExpenseModel.js");
 const expenseController = {};
 
 expenseController.removeExpense = async (req, res, next) => {
-  const { id } = req.params;
+  const { expenses, email } = req.body;
 
-  // GET user
+  const queryString = `UPDATE users SET expenses = '${JSON.stringify(
+    expenses
+  )}' WHERE email='${email}';`;
 
-  // Filter out the expense from the user's expenses array
-
-  // 2. Filter out the expense from the user's expenses array
-  // const filteredExpenses = data.rows[0].expenses.filter((el) => el !== expense);
-
-  // UPDATE user with new expenses array
-
-  // const queryString = `INSERT INTO users(email, password) values ('${email}', '${hashedPassword}');`;
-
-  // db.query(queryString)
-  //   .then((data) => {
-  //     res.locals.message = `You have successfully signed up.`;
-  //     return next();
-  //   })
-  //   .catch((err) =>
-  //     next({
-  //       log: `Error in expenseController.login: ${err}`,
-  //       message: { err: "Error removing expense." },
-  //     })
-  //   );
+  db.query(queryString)
+    .then((data) => {
+      res.locals.message = `You have successfully removed the expense.`;
+      return next();
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
 };
 
 expenseController.addExpense = async (req, res, next) => {

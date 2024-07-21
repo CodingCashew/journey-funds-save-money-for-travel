@@ -67,37 +67,28 @@ function Expenses() {
   };
 
   const removeItem = (id: string) => {
-    // const updatedBudget = expenses.filter((item) => item.id !== id);
-    // setExpenses(updatedBudget);
-    // fetch(`/expense/${newExpenseOrIncome.id}`, {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     email: credentials.email.toLowerCase(),
-    //     password: credentials.password,
-    //   }),
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     const userData = data[0];
-    //     updateUser({
-    //       email: userData.email,
-    //       password: "xxxxxxx",
-    //       expenses: userData.expenses,
-    //     });
-    //     setCredentials(initialValues);
-    //     updateIsLoggedIn(true);
-    //     navigate("/");
-    //   })
-    //   .catch((err: any) => {
-    //     alert("Incorrect username or password.");
-    //     console.error("error: ", err);
-    //   });
+    const updatedExpenses = expenses.filter((item) => item.expenseId !== id);
+
+    fetch(`/expense`, {
+      method: "DELETE",
+      body: JSON.stringify({
+        expenses: updatedExpenses,
+        email: user.email,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setExpenses(updatedExpenses);
+      })
+      .catch((err: any) => {
+        console.error("error: ", err);
+      });
   };
 
   return (
     <div>
-      <h1 className="my-5">Expenses and Income</h1>
+      <h1 className="mt-4 mb-3">Expenses and Income</h1>
       <p>{user.email}</p>
       <div className="d-flex mw-xs-85 p-4">
         <table className="table responsive">
