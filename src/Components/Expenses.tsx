@@ -95,6 +95,7 @@ function Expenses() {
   return (
     <div>
       <h1 className="my-5">Expenses and Income</h1>
+      <p>{user.email}</p>
       <div className="d-flex mw-xs-85 p-4">
         <table className="table responsive">
           <thead>

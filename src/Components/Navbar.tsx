@@ -1,14 +1,12 @@
-import React from "react";
-
-import { useAccountContext } from "../context/AccountContext";
+import { initialValues, useAccountContext } from "../context/AccountContext";
 
 function Navbar() {
-  const {
-    isLoggedIn,
-    updateIsLoggedIn,
-    // user,
-    // updateUser,
-  } = useAccountContext();
+  const { isLoggedIn, setIsLoggedIn, updateUser } = useAccountContext();
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    updateUser(initialValues);
+  };
 
   return (
     <div>
@@ -57,10 +55,7 @@ function Navbar() {
               </a>
             )}
             {isLoggedIn && (
-              <button
-                className="btn btn-primary mx-2"
-                onClick={() => updateIsLoggedIn(false)}
-              >
+              <button className="btn btn-primary mx-2" onClick={handleLogout}>
                 Log out
               </button>
             )}

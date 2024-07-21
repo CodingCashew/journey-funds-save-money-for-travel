@@ -1,14 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useAccountContext } from "../context/AccountContext";
+import { initialValues, useAccountContext } from "../context/AccountContext";
 import { User } from "../shared/interfaces";
-
-const initialValues = {
-  email: "",
-  password: "",
-  expenses: [],
-};
 
 function Login() {
   const [credentials, setCredentials] = useState<User>(initialValues);
@@ -22,14 +16,14 @@ function Login() {
     });
   };
 
-  const { updateIsLoggedIn, updateUser, user } = useAccountContext();
+  const { updateIsLoggedIn, updateUser } = useAccountContext();
 
   const submitCredentials = async () => {
     if (!credentials.email || !credentials.password) return;
     fetch("/login", {
       method: "POST",
       body: JSON.stringify({
-        email: credentials.email,
+        email: credentials.email.toLowerCase(),
         password: credentials.password,
       }),
       headers: { "Content-Type": "application/json" },
@@ -43,7 +37,6 @@ function Login() {
           password: "xxxxxxx",
           expenses: userData.expenses,
         });
-
         setCredentials(initialValues);
         updateIsLoggedIn(true);
 
@@ -59,7 +52,6 @@ function Login() {
     <div>
       <h1 className="my-4">Log In</h1>
       <div className="d-flex-column">
-        <p>{user.expenses ? user.expenses[0].description : "bananas"}</p>
         <div className="d-flex-column flex-wrap">
           <div className="d-flex flex-fill  my-3 col-md-6 mx-auto align-items-center">
             <label className="form-label col-3">Email</label>

@@ -32,7 +32,7 @@ function Signup() {
     fetch("/signup", {
       method: "POST",
       body: JSON.stringify({
-        email: credentials.email,
+        email: credentials.email.toLowerCase(),
         password: credentials.password,
       }),
       headers: { "Content-Type": "application/json" },

@@ -15,6 +15,7 @@ type AccountProviderProps = {
 type AccountContextType = {
   isLoggedIn: boolean;
   user: User;
+  setIsLoggedIn: (newLoggedInState: boolean) => void;
   updateIsLoggedIn: (newLoggedInState: boolean) => void;
   updateUser: (newUser: User) => void;
 };
@@ -25,7 +26,7 @@ export function useAccountContext() {
   return useContext(AccountContext);
 }
 
-const initialValues: User = {
+export const initialValues: User = {
   email: "",
   password: "",
   expenses: [],
@@ -37,8 +38,6 @@ export function AccountProvider({ children }: AccountProviderProps) {
 
   function updateIsLoggedIn(newLoggedInState: boolean): void {
     setIsLoggedIn(newLoggedInState);
-
-    if (!isLoggedIn) updateUser(initialValues);
   }
 
   function updateUser(newUserValues: User): void {
@@ -47,8 +46,12 @@ export function AccountProvider({ children }: AccountProviderProps) {
 
   useEffect(() => {
     const data = window.localStorage.getItem("user");
-    if (data !== "undefined") {
-      setUser(JSON.parse(data!));
+    if (data !== "undefined" && data !== null) {
+      const parsedUser = JSON.parse(data!);
+      if (parsedUser.email.length) {
+        setUser(parsedUser);
+        setIsLoggedIn(true);
+      }
     }
   }, []);
 
@@ -63,6 +66,7 @@ export function AccountProvider({ children }: AccountProviderProps) {
         user,
         updateIsLoggedIn,
         updateUser,
+        setIsLoggedIn,
       }}
     >
       {children}
