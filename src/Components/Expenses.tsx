@@ -1,54 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAccountContext } from "../context/AccountContext";
 import { IncomeOrExpense } from "../shared/interfaces";
 
-const dummyData: IncomeOrExpense[] = [
-  {
-    id: 1,
-    category: "Groceries",
-    amount: 100,
-    notes: "Groceries for the week",
-    satisfaction: 5,
-    description: "HEB",
-    date: new Date("2024-07-19"),
-    incomeOrExpense: "expense",
-  },
-  {
-    id: 2,
-    category: "Gas",
-    amount: 50,
-    satisfaction: 4,
-    description: "Exxon",
-    date: new Date("2024-07-18"),
-    notes: "Gas for the week",
-    incomeOrExpense: "expense",
-  },
-  {
-    id: 3,
-    category: "Entertainment",
-    amount: 100,
-    satisfaction: 4,
-    description: "Alamo Drafthouse",
-    date: new Date("2024-07-17"),
-    notes: "Movies and dinner",
-    incomeOrExpense: "expense",
-  },
-  {
-    id: 4,
-    category: "Income",
-    amount: 500,
-    satisfaction: 5,
-    description: "HEB",
-    date: new Date("2024-07-16"),
-    notes: "Weekly paycheck",
-    incomeOrExpense: "income",
-  },
-];
-
 function Expenses() {
+  const [expenses, setExpenses] = useState<IncomeOrExpense[]>([]);
+
   const { user } = useAccountContext();
-  const [expenses, setExpenses] = useState<IncomeOrExpense[]>(dummyData);
+
+  useEffect(() => {
+    if (user.expenses) {
+      setExpenses(user.expenses);
+    }
+  }, [user]);
 
   const [isAddingExpenseOrIncome, setIsAddingExpenseOrIncome] =
     useState<boolean>(false);
@@ -137,7 +101,7 @@ function Expenses() {
           </tbody>
         </table>
       </div>
-      {!isAddingExpenseOrIncome && (
+      {!isAddingExpenseOrIncome && user.email && (
         <button
           type="button"
           className="btn btn-primary"
