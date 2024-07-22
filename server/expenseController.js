@@ -1,4 +1,4 @@
-const db = require("./ExpenseModel.js");
+const db = require("./DatabaseModel.js");
 
 const expenseController = {};
 

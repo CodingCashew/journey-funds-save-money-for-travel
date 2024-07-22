@@ -36,6 +36,7 @@ function Login() {
           email: userData.email,
           password: "xxxxxxx",
           expenses: userData.expenses,
+          budget: userData.budget,
         });
         setCredentials(initialValues);
         updateIsLoggedIn(true);
@@ -43,7 +44,6 @@ function Login() {
         navigate("/");
       })
       .catch((err: any) => {
-        alert("Incorrect username or password.");
         console.error("error: ", err);
       });
   };

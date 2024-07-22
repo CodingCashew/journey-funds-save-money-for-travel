@@ -4,6 +4,7 @@ const path = require("path");
 const PORT = 8080;
 const loginController = require("./loginController");
 const expenseController = require("./expenseController");
+const budgetController = require("./budgetController");
 
 require("dotenv").config();
 
@@ -28,6 +29,14 @@ app.post("/expense", expenseController.addExpense, (req, res) => {
 });
 
 app.delete("/expense", expenseController.removeExpense, (req, res) => {
+  return res.status(200).json(res.locals.message);
+});
+
+app.post("/budget", budgetController.addBudgetCategory, (req, res) => {
+  return res.status(200).json(res.locals.user);
+});
+
+app.delete("/budget", budgetController.removeBudgetCategory, (req, res) => {
   return res.status(200).json(res.locals.message);
 });
 

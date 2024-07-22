@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useAccountContext } from "../context/AccountContext";
 import { BudgetCategory } from "../shared/interfaces";
 
-const dummyData: BudgetCategory[] = [
-  { Rent: 1000 },
-  { Groceries: 200 },
-  { Utilities: 100 },
-  { Entertainment: 50 },
-];
-
 function Budget() {
-  const [budget, setBudget] = useState<BudgetCategory[]>(dummyData);
+  const [budget, setBudget] = useState<BudgetCategory[]>([]);
+
+  const { user } = useAccountContext();
+
+  useEffect(() => {
+    if (user.budget) {
+      setBudget(user.budget);
+    }
+  }, [user]);
 
   const [isAddingCategory, setIsAddingCategory] = useState<boolean>(false);
 
@@ -25,14 +28,50 @@ function Budget() {
   };
 
   const handleSubmitNewBudgetItem = () => {
-    setBudget((prevState) => [...prevState, { [newCategory]: newAmount }]);
+    const newBudgetCategory = [newCategory, newAmount];
+
+    fetch("/budget", {
+      method: "POST",
+      body: JSON.stringify({ newBudgetCategory, email: user.email }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBudget(JSON.parse(data.budget));
+        setCategory("");
+        setAmount(0);
+      })
+      .catch((err: any) => {
+        console.error("error: ", err);
+      });
 
     setIsAddingCategory(false);
   };
 
   const removeItem = (key: string) => {
-    const updatedBudget = budget.filter((item) => !item[key]);
-    setBudget(updatedBudget);
+    const budgetAsArray = Object.entries(budget[0]);
+
+    const filteredBudgetArray = budgetAsArray.filter(
+      ([category, amount]) => category !== key
+    );
+
+    const filteredBudget = [Object.fromEntries(filteredBudgetArray)];
+
+    fetch("/budget", {
+      method: "DELETE",
+      body: JSON.stringify({
+        budget: filteredBudget,
+        email: user.email,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setBudget(filteredBudget);
+      })
+      .catch((err: any) => {
+        console.error("error: ", err);
+      });
   };
 
   return (
@@ -68,7 +107,7 @@ function Budget() {
           </tbody>
         </table>
       </div>
-      {!isAddingCategory && (
+      {!isAddingCategory && user.email && (
         <button
           type="button"
           className="btn btn-primary"
@@ -103,7 +142,7 @@ function Budget() {
               ></input>
             </div>
           </div>
-          <div>
+          <div className="p-4">
             <button
               type="button"
               className="btn btn-success"
