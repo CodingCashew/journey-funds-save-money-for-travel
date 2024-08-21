@@ -25,7 +25,7 @@ app.post("/login", loginController.login, (req, res) => {
 });
 
 app.post("/expense", expenseController.addExpense, (req, res) => {
-  return res.status(200).json(res.locals.user);
+  return res.status(200).json(res.locals.message);
 });
 
 app.delete("/expense", expenseController.removeExpense, (req, res) => {

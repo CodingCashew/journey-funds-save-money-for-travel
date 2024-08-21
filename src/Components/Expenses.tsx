@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useAccountContext } from "../context/AccountContext";
 import { IncomeOrExpense } from "../shared/interfaces";
+import PieChart from "./PieChart";
 
 function Expenses() {
   const [expenses, setExpenses] = useState<IncomeOrExpense[]>([]);
@@ -50,14 +51,16 @@ function Expenses() {
 
     setNewExpenseOrIncome(formattedNewExpense);
 
+    const updatedExpenses = [...expenses, formattedNewExpense];
+
     fetch("/expense", {
       method: "POST",
-      body: JSON.stringify({ expense: formattedNewExpense, email: user.email }),
+      body: JSON.stringify({ updatedExpenses, email: user.email }),
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .then((data) => {
-        setExpenses(JSON.parse(data.expenses));
+        setExpenses(updatedExpenses);
       })
       .catch((err: any) => {
         console.error("error: ", err);
@@ -90,7 +93,9 @@ function Expenses() {
     <div>
       <h1 className="mt-4 mb-3">Expenses and Income</h1>
       <p>{user.email}</p>
-      <div className="d-flex mw-xs-85 p-4">
+      <div className="d-flex mw-xs-85 p-4 justify-content-center">
+        <div className="d-flex-col ">
+        {expenses && expenses.length > 0 && <PieChart expenses={expenses} />}
         <table className="table responsive">
           <thead>
             <tr>
@@ -132,6 +137,7 @@ function Expenses() {
             })}
           </tbody>
         </table>
+        </div>
       </div>
       {!isAddingExpenseOrIncome && user.email && (
         <button
