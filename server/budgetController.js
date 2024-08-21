@@ -26,7 +26,8 @@ budgetController.addBudgetCategory = async (req, res, next) => {
     const user = data.rows[0];
     const budget = user.budget;
 
-    budget[0][newBudgetCategory[0]] = Number(newBudgetCategory[1]);
+    const newBudgetItem = { [newBudgetCategory[0]]: Number(newBudgetCategory[1]) };
+    budget.push(newBudgetItem);
 
     const userToSendBack = { ...user, budget: JSON.stringify(budget) };
 

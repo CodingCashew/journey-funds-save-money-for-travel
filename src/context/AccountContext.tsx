@@ -49,7 +49,7 @@ export function AccountProvider({ children }: AccountProviderProps) {
     const data = window.localStorage.getItem("user");
     if (data !== "undefined" && data !== null) {
       const parsedUser = JSON.parse(data!);
-      if (parsedUser.email.length) {
+      if (parsedUser.email && parsedUser.email.length) {
         setUser(parsedUser);
         setIsLoggedIn(true);
       }

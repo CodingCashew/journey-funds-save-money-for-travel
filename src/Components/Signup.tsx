@@ -34,6 +34,8 @@ function Signup() {
       body: JSON.stringify({
         email: credentials.email.toLowerCase(),
         password: credentials.password,
+        budget: [],
+        expenses: [],
       }),
       headers: { "Content-Type": "application/json" },
     })

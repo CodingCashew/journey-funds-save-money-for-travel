@@ -5,13 +5,13 @@ const db = require("./DatabaseModel.js");
 const loginController = {};
 
 loginController.signup = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, budget, expenses } = req.body;
 
   // TODO: Check if email already exists in database
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const queryString = `INSERT INTO users(email, password) values ('${email}', '${hashedPassword}');`;
+  const queryString = `INSERT INTO users(email, password, budget, expenses) values ('${email}', '${hashedPassword}', '${budget}', '${expenses}');`;
 
   db.query(queryString)
     .then((data) => {

@@ -35,8 +35,8 @@ function Login() {
         updateUser({
           email: userData.email,
           password: "xxxxxxx",
-          expenses: userData.expenses,
-          budget: userData.budget,
+          expenses: userData.expenses || [],
+          budget: userData.budget || [],
         });
         setCredentials(initialValues);
         updateIsLoggedIn(true);
