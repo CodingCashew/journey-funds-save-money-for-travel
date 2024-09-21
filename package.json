@@ -13,6 +13,7 @@
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.4.4",
+    "chroma-js": "^3.1.1",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -22,6 +23,7 @@
     "path": "^0.12.7",
     "pg": "^8.12.0",
     "react": "^18.3.1",
+    "react-bootstrap": "^2.10.4",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
@@ -32,6 +34,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@testing-library/react": "^13.4.0",
+    "@types/chroma-js": "^2.4.4",
     "@types/node": "^20.14.11",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

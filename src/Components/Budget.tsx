@@ -77,35 +77,37 @@ function Budget() {
   return (
     <div>
       <h1 className="my-4">My Budget</h1>
-      <div className="d-flex mw-xs-85 p-4">
-        <table className="table responsive">
-          <thead>
-            <tr>
-              <th scope="col">Category</th>
-              <th scope="col">Amount</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {budget.map((item, index) =>
-              Object.entries(item).map(([key, value]) => (
-                <tr key={key + index}>
-                  <th scope="row">{key}</th>
-                  <td>${value}</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="btn btn-outline-danger"
-                      onClick={() => removeItem(key)}
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+      <div className="p-4">
+        <div className="d-flex-col">
+          <table className="table responsive">
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Amount</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {budget.map((item, index) =>
+                Object.entries(item).map(([key, value]) => (
+                  <tr key={key + index} className="align-middle">
+                    <th scope="row">{key}</th>
+                    <td>${value}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={() => removeItem(key)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
       {!isAddingCategory && user.email && (
         <button

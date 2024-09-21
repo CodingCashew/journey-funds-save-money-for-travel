@@ -10,7 +10,7 @@ export interface IncomeOrExpense {
   amount: number;
   satisfaction?: number;
   notes?: string;
-  incomeOrExpense: "income" | "expense";
+  incomeOrExpense: "income" | "expense" | "";
 }
 
 export interface User {
@@ -18,4 +18,8 @@ export interface User {
   password: string;
   budget?: BudgetCategory[];
   expenses?: IncomeOrExpense[];
+}
+
+export interface CategoryTotals {
+  [key: string]: number;
 }

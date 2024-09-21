@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useAccountContext } from "../context/AccountContext";
 import { IncomeOrExpense } from "../shared/interfaces";
-import PieChart from "./PieChart";
 
 function Expenses() {
   const [expenses, setExpenses] = useState<IncomeOrExpense[]>([]);
@@ -95,58 +94,59 @@ function Expenses() {
       <p>{user.email}</p>
       <div className="d-flex mw-xs-85 p-4 justify-content-center">
         <div className="d-flex-col ">
-        {expenses && expenses.length > 0 && <PieChart expenses={expenses} />}
-        <table className="table responsive">
-          <thead>
-            <tr>
-              {/* <th scope="col">#</th> */}
-              <th scope="col">Id</th>
-              <th scope="col">Date</th>
-              <th scope="col">Description</th>
-              <th scope="col">Category</th>
-              <th scope="col">Notes</th>
-              <th scope="col">Amount</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses.map((item, index) => {
-              return (
-                <tr key={index}>
-                  {/* <td>{index + 1}</td> */}
-                  <td>{item.expenseId}</td>
-                  <td>{new Date(item.date).toLocaleDateString()}</td>
-                  <td>{item.description}</td>
-                  <td>{item.category}</td>
-                  <td>{item.notes}</td>
-                  <td>
-                    {item.incomeOrExpense === "expense" ? "-" : ""}$
-                    {item.amount}
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      className="btn btn-outline-danger"
-                      onClick={() => removeItem(item.expenseId)}
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+          <table className="table responsive">
+            <thead>
+              <tr>
+                {/* <th scope="col">#</th> */}
+                <th scope="col">Id</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+                <th scope="col">Category</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Amount</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {expenses.map((item, index) => {
+                return (
+                  <tr key={index} className="align-middle">
+                    {/* <td>{index + 1}</td> */}
+                    <td>{item.expenseId}</td>
+                    <td>{new Date(item.date).toLocaleDateString()}</td>
+                    <td>{item.description}</td>
+                    <td>{item.category}</td>
+                    <td>{item.notes}</td>
+                    <td>
+                      {item.incomeOrExpense === "expense" ? "-" : ""}$
+                      {item.amount}
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-outline-danger"
+                        onClick={() => removeItem(item.expenseId)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
       {!isAddingExpenseOrIncome && user.email && (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => setIsAddingExpenseOrIncome(true)}
-        >
-          Add Expense or Income
-        </button>
+        <div className="mb-4">
+          <button
+            type="button"
+            className="btn btn-primary mb-4"
+            onClick={() => setIsAddingExpenseOrIncome(true)}
+          >
+            Add Expense or Income
+          </button>
+        </div>
       )}
       {isAddingExpenseOrIncome === true && (
         <div className="d-flex-column">

@@ -12,8 +12,8 @@ function Navbar() {
     <div>
       <nav className="navbar navbar-expand-sm bg-light">
         <div className="container-fluid">
-          <a href="/">
-            <h2 className="navbar-brand">Save Money for Travel!</h2>
+          <a href="/" className="text-decoration-none">
+            <h2 className="navbar-brand">JourneyFunds - Save Money for Travel!</h2>
           </a>
           <button
             className="navbar-toggler"
@@ -26,8 +26,11 @@ function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mw-30">
+          <div
+            className="collapse navbar-collapse d-flex-md justify-content-md-end"
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav mb-2 mb-lg-0 mw-30">
               <li className="nav-item">
                 <a
                   className="nav-link active"
@@ -38,14 +41,14 @@ function Navbar() {
                 </a>
               </li>
             </ul>
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mw-30">
+            <ul className="navbar-nav mb-2 mb-lg-0 mw-30">
               <li className="nav-item">
                 <a
                   className="nav-link active"
                   aria-current="page"
                   href="/budget"
                 >
-                  My Budget
+                  Budget
                 </a>
               </li>
             </ul>

@@ -1,43 +1,35 @@
 import React from "react";
-// import Chart from "chart.js/auto";
+import chroma from 'chroma-js';
 import { Pie } from "react-chartjs-2";
-import {Chart, ArcElement} from 'chart.js'
-Chart.register(ArcElement);
+import {Chart, ArcElement, Tooltip, Legend} from 'chart.js'
+import { getExpenseTotals } from "../helpers/CategoryList";
+Chart.register(ArcElement, Tooltip, Legend);
 
-function PieChart({expenses}: any) {
-  //   const data = {
-  //     labels: ['Red', 'Orange', 'Blue'],
-  //     // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
-  //     datasets: [
-  //         {
-  //           label: 'Popularity of colours',
-  //           data: [55, 23, 96],
-  //           backgroundColor: [
-  //             'red'
-  //             'blue'
-  //             'green'
-  //           ],
-  //           borderWidth: 1,
-  //         }
-  //     ]
-  // }
-  const labels = ["January", "February", "March", "April", "May", "June"];
+// TODO: Make this dynamic instead of duplicating code
+function ExpensePieChart({expenses}: any) {
+  const expenseTotals = getExpenseTotals(expenses);
+  const labels = Object.keys(expenseTotals);
+  const amounts = Object.values(expenseTotals);
+
+  const colors = chroma.scale('Set3').mode('lch').colors(labels.length);
+
   const data = {
     labels: labels,
     datasets: [
       {
-        label: "My First dataset",
-        backgroundColor: ['red', 'blue', 'green', 'yellow', 'purple', 'orange'],
-        borderColor: "white",
-        data: [0, 10, 5, 2, 20, 30, 45],
+        // label: "My First dataset",
+        backgroundColor: colors,
+        // borderColor: "white",
+        data: amounts,
       },
     ],
   };
   return (
     <div>
+      <h4>Expenses</h4>
       <Pie data={data} />
     </div>
   );
 }
 
-export default PieChart;
+export default ExpensePieChart;
