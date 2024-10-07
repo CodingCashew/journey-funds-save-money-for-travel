@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAccountContext } from "../context/AccountContext";
 import { IncomeOrExpense } from "../shared/interfaces";
-import IncomeBarChart from "./BarChart";
-import ExpensePieChart from "./PieChart";
+import IncomeBarChart from "../Components/BarChart";
+import ExpensePieChart from "../Components/PieChart";
 
 function Home() {
   const [expenses, setExpenses] = useState<IncomeOrExpense[]>([]);
@@ -10,7 +10,10 @@ function Home() {
   const { user } = useAccountContext();
 
   useEffect(() => {
-    console.log('this should call even when the users expenses change, right? ', user.expenses);
+    console.log(
+      "this should call even when the users expenses change, right? ",
+      user.expenses
+    );
     if (user.expenses) {
       setExpenses(user.expenses);
     }

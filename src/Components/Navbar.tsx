@@ -52,6 +52,17 @@ function Navbar() {
                 </a>
               </li>
             </ul>
+            <ul className="navbar-nav mb-2 mb-lg-0 mw-30">
+              <li className="nav-item">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="/savings"
+                >
+                  Savings
+                </a>
+              </li>
+            </ul>
             {!isLoggedIn && (
               <a className="nav-link active" aria-current="page" href="/login">
                 <button className="btn btn-primary mx-2">Log in</button>

@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Budget from "./Components/Budget.tsx";
-import Expenses from "./Components/Expenses.tsx";
-import Home from "./Components/Home.tsx";
-import Login from "./Components/Login.tsx";
+import Budget from "./Pages/Budget.tsx";
+import Expenses from "./Pages/Expenses.tsx";
+import Savings from "./Pages/Savings.tsx";
+import Home from "./Pages/Home.tsx";
+import Login from "./Pages/Login.tsx";
 import Navbar from "./Components/Navbar.tsx";
-import Signup from "./Components/Signup.tsx";
+import Signup from "./Pages/Signup.tsx";
 import { AccountProvider } from "./context/AccountContext";
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
           <Routes>
             <Route path="/budget" element={<Budget />} />
             <Route path="/expenses" element={<Expenses />} />
+            <Route path="/savings" element={<Savings />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Home />} />

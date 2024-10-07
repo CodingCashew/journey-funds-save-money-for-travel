@@ -29,7 +29,7 @@ const IncomeBarChart = ({ income }: any) => {
     plugins: {
       title: {
         display: true,
-        text: 'Income Bar Chart',
+        text: 'Income',
         font: {
           size: 20
         }
