@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAccountContext } from "../context/AccountContext";
 import { IncomeOrExpense } from "../shared/interfaces";
+import IncomeBarChart from "./BarChart";
 import ExpensePieChart from "./PieChart";
 
 function Home() {
@@ -20,6 +21,7 @@ function Home() {
       <h1 className="my-4">Save Money for Travel!</h1>
       <div className="d-flex mw-xs-85 p-4">
         <ExpensePieChart expenses={expenses} />
+        <IncomeBarChart incomeData={expenses} />
       </div>
     </div>
   );
